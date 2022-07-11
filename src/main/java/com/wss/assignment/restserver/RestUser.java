@@ -7,13 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 public class RestUser {
     private final String url = "/api/user";
-    private UserService userService;
+    private final UserService userService;
 
     public RestUser(@Autowired UserService userService){
         this.userService = userService;
@@ -66,7 +63,7 @@ public class RestUser {
 
             return ResponseHandler.generateResponse(HttpStatus.OK, "updated", null);
         } catch (Exception ex) {
-            return ResponseHandler.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), null);
+            return ResponseHandler.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, "error", null);
         }
     }
 
