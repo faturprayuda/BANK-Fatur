@@ -1,0 +1,33 @@
+version: '3.1'
+services:
+  API:
+    image: 'bank-fatur-docker'
+    ports:
+      - "8080:8080"
+    depends_on:
+      PostgreSQL:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/assignment_wss
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    healthcheck:
+      test: curl -sS http://localhost:8080/ping || exit 1
+      interval: 14400s
+      timeout: 5s
+      retries: 5
+
+  PostgreSQL:
+    image: postgres
+    ports:
+      - "9876:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=assignment_wss
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
