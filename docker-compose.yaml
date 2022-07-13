@@ -12,11 +12,6 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    healthcheck:
-      test: curl -sS http://localhost:8080/ping || exit 1
-      interval: 14400s
-      timeout: 5s
-      retries: 5
 
   PostgreSQL:
     image: postgres
